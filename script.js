@@ -12,6 +12,34 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Theme Toggle Functionality
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
+const themeIcon = themeToggle.querySelector('i');
+
+// Check for saved theme preference or default to dark mode
+const currentTheme = localStorage.getItem('theme') || 'dark';
+if (currentTheme === 'light') {
+    body.classList.add('light-mode');
+    themeIcon.classList.remove('fa-sun');
+    themeIcon.classList.add('fa-moon');
+}
+
+themeToggle.addEventListener('click', () => {
+    body.classList.toggle('light-mode');
+    
+    // Toggle icon
+    if (body.classList.contains('light-mode')) {
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'light');
+    } else {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'dark');
+    }
+});
+
 // Active navigation link highlighting on scroll
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-link');
@@ -84,11 +112,17 @@ const navbar = document.querySelector('.navbar');
 
 window.addEventListener('scroll', () => {
     if (window.scrollY > 100) {
-        navbar.style.backgroundColor = 'rgba(10, 25, 47, 0.98)';
-        navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.5)';
+        if (body.classList.contains('light-mode')) {
+            navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+        } else {
+            navbar.style.backgroundColor = 'rgba(15, 15, 15, 0.95)';
+        }
     } else {
-        navbar.style.backgroundColor = 'rgba(10, 25, 47, 0.95)';
-        navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
+        if (body.classList.contains('light-mode')) {
+            navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+        } else {
+            navbar.style.backgroundColor = 'rgba(15, 15, 15, 0.8)';
+        }
     }
 });
 
